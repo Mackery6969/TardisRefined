@@ -39,31 +39,26 @@ public class ScreenHandler {
             waypointScreen.switchScreenToLeft(new WaypointListScreen(waypoints), waypointScreen.PREVIOUS);
             return;
         }
-        if (mc.screen instanceof MonitorOS) {
-            ((MonitorOS) mc.screen).switchScreenToRight(new WaypointListScreen(waypoints));
+        showOnMonitorOrScreen(new WaypointListScreen(waypoints));
+    }
+
+    private static void showOnMonitorOrScreen(MonitorOS next) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.screen instanceof MonitorOS current) {
+            current.switchScreenToRight(next);
             return;
         }
-        Minecraft.getInstance().setScreen(new WaypointListScreen(waypoints));
+        mc.setScreen(next);
     }
 
     @Environment(EnvType.CLIENT)
     public static void setCoordinatesScreen(List<ResourceKey<Level>> levels, CoordInputType coordInputType, TardisNavLocation tardisNavLocation) {
-        Minecraft mc = Minecraft.getInstance();
-        if (mc.screen instanceof MonitorOS) {
-            ((MonitorOS) mc.screen).switchScreenToRight(new WaypointManageScreen(levels, coordInputType, tardisNavLocation));
-            return;
-        }
-        Minecraft.getInstance().setScreen(new WaypointManageScreen(levels, coordInputType, tardisNavLocation));
+        showOnMonitorOrScreen(new WaypointManageScreen(levels, coordInputType, tardisNavLocation));
     }
 
     @Environment(EnvType.CLIENT)
     public static void setEditCoordinatesScreen(TardisWaypoint waypoint) {
-        Minecraft mc = Minecraft.getInstance();
-        if (mc.screen instanceof MonitorOS) {
-            ((MonitorOS) mc.screen).switchScreenToRight(new WaypointManageScreen(waypoint));
-            return;
-        }
-        Minecraft.getInstance().setScreen(new WaypointManageScreen(waypoint));
+        showOnMonitorOrScreen(new WaypointManageScreen(waypoint));
     }
 
 
@@ -104,12 +99,7 @@ public class ScreenHandler {
 
     @Environment(EnvType.CLIENT)
     public static void openShellSelection(ResourceLocation currentShell) {
-        Minecraft mc = Minecraft.getInstance();
-        if (mc.screen instanceof MonitorOS) {
-            ((MonitorOS) mc.screen).switchScreenToRight(new ShellSelectionScreen(currentShell));
-            return;
-        }
-        Minecraft.getInstance().setScreen(new ShellSelectionScreen(currentShell));
+        showOnMonitorOrScreen(new ShellSelectionScreen(currentShell));
     }
 
     @Environment(EnvType.CLIENT)
