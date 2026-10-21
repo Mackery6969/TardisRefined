@@ -32,7 +32,7 @@ public class ScreenHandler {
     public static void setWaypointScreen(Collection<TardisWaypoint> waypoints) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.screen instanceof WaypointManageScreen waypointEdit) {
-            waypointEdit.switchScreenToLeft(new WaypointListScreen(waypoints), waypointEdit.PREVIOUS.PREVIOUS);
+            waypointEdit.switchScreenToLeft(new WaypointListScreen(waypoints), waypointEdit.PREVIOUS != null ? waypointEdit.PREVIOUS.PREVIOUS : null);
             return;
         }
         if (mc.screen instanceof WaypointListScreen waypointScreen) {
