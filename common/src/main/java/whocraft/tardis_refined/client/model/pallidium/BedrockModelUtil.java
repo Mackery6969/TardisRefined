@@ -119,6 +119,10 @@ public class BedrockModelUtil {
                     }
                 }
             }
+
+            if (cache.size() == copy.size()) {
+                throw new JsonParseException("Circular parent hierarchy in bones " + cache.keySet());
+            }
         }
 
         return LayerDefinition.create(meshDefinition, textureWidth, textureHeight);
