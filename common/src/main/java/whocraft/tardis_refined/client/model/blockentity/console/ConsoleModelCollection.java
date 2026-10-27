@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 import whocraft.tardis_refined.api.event.TardisClientEvents;
 import whocraft.tardis_refined.client.ModelRegistry;
 import whocraft.tardis_refined.common.tardis.themes.ConsoleTheme;
+import whocraft.tardis_refined.registry.RegistrySupplier;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,20 +50,24 @@ public class ConsoleModelCollection {
         initiativeConsoleModel = new InitiativeConsoleModel(context.bakeLayer(ModelRegistry.INITIATIVE_CONSOLE));
         refurbishedConsoleModel = new RefurbishedConsoleModel(context.bakeLayer(ModelRegistry.REFURBISHED_CONSOLE));
 
-        registerModel(ConsoleTheme.FACTORY.getId(), new ConsoleModelEntry(factoryConsoleModel));
-        registerModel(ConsoleTheme.NUKA.getId(), new ConsoleModelEntry(nukaConsoleModel));
-        registerModel(ConsoleTheme.COPPER.getId(), new ConsoleModelEntry(copperConsoleModel));
-        registerModel(ConsoleTheme.CORAL.getId(), new ConsoleModelEntry(coralConsoleModel));
-        registerModel(ConsoleTheme.TOYOTA.getId(), new ConsoleModelEntry(toyotaConsoleModel));
-        registerModel(ConsoleTheme.CRYSTAL.getId(), new ConsoleModelEntry(crystalConsoleModel));
-        registerModel(ConsoleTheme.VICTORIAN.getId(), new ConsoleModelEntry(victorianConsoleModel));
-        registerModel(ConsoleTheme.MYST.getId(), new ConsoleModelEntry(mystConsoleModel));
-        registerModel(ConsoleTheme.INITIATIVE.getId(), new ConsoleModelEntry(initiativeConsoleModel));
-        registerModel(ConsoleTheme.REFURBISHED.getId(), new ConsoleModelEntry(refurbishedConsoleModel));
+        registerModel(ConsoleTheme.FACTORY, factoryConsoleModel);
+        registerModel(ConsoleTheme.NUKA, nukaConsoleModel);
+        registerModel(ConsoleTheme.COPPER, copperConsoleModel);
+        registerModel(ConsoleTheme.CORAL, coralConsoleModel);
+        registerModel(ConsoleTheme.TOYOTA, toyotaConsoleModel);
+        registerModel(ConsoleTheme.CRYSTAL, crystalConsoleModel);
+        registerModel(ConsoleTheme.VICTORIAN, victorianConsoleModel);
+        registerModel(ConsoleTheme.MYST, mystConsoleModel);
+        registerModel(ConsoleTheme.INITIATIVE, initiativeConsoleModel);
+        registerModel(ConsoleTheme.REFURBISHED, refurbishedConsoleModel);
 
         TardisClientEvents.CONSOLE_MODELS_SETUP.invoker().setupConsoleModels(this, context);
 
         validateConsoleModels();
+    }
+
+    private void registerModel(RegistrySupplier<ConsoleTheme> theme, ConsoleUnit model) {
+        registerModel(theme.getId(), new ConsoleModelEntry(model));
     }
 
     private static void validateConsoleModels() {
